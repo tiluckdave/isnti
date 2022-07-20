@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- favicon -->
+  <link rel="shortcut icon" href="favicon.png" />
+  <!-- preload js -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" as="script" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/ScrollTrigger/1.0.5/ScrollTrigger.min.js"
+    as="script" />
+  <!-- css -->
+  <link rel="stylesheet" href="./css/style.css" />
+  <title>Tilak</title>
+</head>
+
+<body>
+
+
+  <progress max="100" value="0"></progress>
+  <h1 class="text">#isntirocks</h1>
+  <h1 aria-hidden="true" class="text outline-text">#isntirocks</h1>
+  <h1 aria-hidden="true" class="text filter-text">#isntirocks</h1>
+
+  <div id="wrapper">
+    <section id="content">
+      <section class="images">
+        <img data-speed="0.8"
+          src="./images/1.png"
+          alt="">
+        <img data-speed="0.9"
+          src="./images/2.png"
+          alt="">
+        <img data-speed="1"
+          src="./images/3.png"
+          alt="">
+        <img data-speed="1.1"
+          src="./images/4.png"
+          alt="">
+        <img data-speed="0.9"
+          src="./images/5.png"
+          alt="">
+        <img data-speed="1.2"
+          src="./images/6.png"
+          alt="">
+        <img data-speed="0.8"
+          src="./images/7.png"
+          alt="">
+        <img data-speed="1"
+          src="./images/8.png"
+          alt="">
+      </section>
+    </section>
+  </div>
+
+  <h4 class="foot">Together since Dec, 2018</h4>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+  <script>
+
+    let proxy = { skew: 0 },
+      skewSetter = gsap.quickSetter("img", "skewY", "deg"),
+      clamp = gsap.utils.clamp(-20, 20);
+
+    ScrollTrigger.create({
+      onUpdate: (self) => {
+        let skew = clamp(self.getVelocity() / -150);
+        if (Math.abs(skew) > Math.abs(proxy.skew)) {
+          proxy.skew = skew;
+          gsap.to(proxy, { skew: 0, duration: 2, ease: "power3", overwrite: true, onUpdate: () => skewSetter(proxy.skew) });
+        }
+      }
+    });
+    gsap.set("img", { transformOrigin: "right center", force3D: true });
+
+    gsap.to('progress', {
+      value: 100,
+      ease: 'none',
+      scrollTrigger: { scrub: 0.3 }
+    });
+
+    let config = { strength: 1 };
+
+    gsap.to("h1", {
+      repeat: -1,
+      yoyo: true,
+      x: 1,
+      duration: 0.3,
+      ease: "power1.inOut",
+      modifiers: {
+        x: gsap.utils.unitize(value => value * config.strength, "px"),
+      }
+    });
+
+    gsap.to(config, {
+      strength: 10,
+      ease: "power1.inOut",
+      scrollTrigger: {
+        scrub: true
+      }
+    });
+
+  </script>
+</body>
+
+</html>
